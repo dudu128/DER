@@ -1,7 +1,8 @@
 import pickle
+import pandas as pd
 
 objects = []
-with (open("wrong.pkl", "rb")) as openfile:
+with (open("./wrong_pickle/wrong_6.pkl", "rb")) as openfile:
     while True:
         try:
             objects.append(pickle.load(openfile))
@@ -9,3 +10,16 @@ with (open("wrong.pkl", "rb")) as openfile:
             break
 
 print (objects)
+# len of data
+print (len(objects[0]))
+# len of feature per data
+print (len(objects[0][0]))
+
+# if label = 9 
+data=[9]*len(objects[0])
+df = pd.DataFrame(data)
+df.columns = ["label"]
+
+# print(df.shape)
+print(df)
+df.to_csv('out.csv')
