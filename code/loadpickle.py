@@ -15,8 +15,8 @@ print (len(objects[0]))
 # len of feature per data
 print (len(objects[0][0]))
 
-# if label = 9 
-data=[9]*len(objects[0])
+# if label = 6 
+data=[6]*len(objects[0])
 df = pd.DataFrame(data)
 df.columns = ["label"]
 
