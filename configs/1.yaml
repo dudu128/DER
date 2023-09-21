@@ -1,0 +1,155 @@
+exp:
+  name: "AUO_last"
+  savedir: "./logs"
+  tensorboard_dir: "./tensorboard"
+  debug: False
+
+
+#Model Cfg
+model: "incmodel"
+#b0:'preact_resnet18'
+#b50: 'resnet18'
+convnet: 'resnet18' #modified_resnet32, resnet18
+train_head: 'softmax'
+infer_head: 'softmax'
+channel: 64
+use_bias: False
+last_relu: False
+
+der: True
+use_aux_cls: True
+aux_n+1: True
+aux_n+2: False
+aux_open: False
+distillation: "none"
+temperature: 5
+
+gce: False
+gce_topk: 5
+sci: False
+mixup: True
+mixup_a: 0.5
+mixup_old: False
+mixup_old_p: 0
+mixup_old_others: False
+
+reuse_oldfc: False
+weight_normalization: False
+val_per_n_epoch: 1 # Validation Per N epoch. -1 means the function is off.
+save_ckpt: True
+save_mem: True
+load_mem: True
+deep_fc: False
+rotation: False
+jigsaw: True
+jigsaw_patches: 7
+loc: 5
+RCM: True
+
+#Optimization;Training related
+task_max: 10
+lr_min: 0.00005
+lr: 0.001
+weight_decay: 0.0005
+dynamic_weight_decay: False
+# scheduler: 'multistep'
+scheduler: "cosine"
+scheduling:
+  - 100
+  - 120
+lr_decay: 0.1
+optimizer: "adam"
+epochs: 200
+resampling: False
+warmup: True
+warmup_epochs: 10
+
+postprocessor:
+  enable: False
+  type: 'bic' #'bic', 'wa'
+  epochs: 1
+  batch_size: 128
+  lr: 0.1
+  scheduling:
+    - 60
+    - 90
+    - 120
+  lr_decay_factor: 0.1
+  weight_decay: 0.0005
+
+decouple:
+  enable: True 
+  epochs: 50 #finetune epoch
+  fullset: True
+  lr: 0.1
+  type: "cosine"
+  scheduling:
+    - 10
+    - 20
+  lr_decay: 0.1
+  weight_decay: 0.0005
+  temperature: 5.0
+  optim: "adam"
+  mixup: False
+  alpha: 0.5
+  reset_fc: True
+  finetune: False #finetune
+
+pretrain:
+  epochs: 300
+  lr: 0.001
+  optimizer: "adam"
+  scheduler: "cosine"
+  gce: False
+  gce_topk: 5
+  mixup: False
+  mixup_a: 0.2
+  loc: 5
+  # scheduling:
+  #   # - 60
+  #   - 100
+  #   - 120
+  #   # - 160
+  lr_decay: 0.1
+  weight_decay: 0.0005
+pretrain_model: "/hcds_vol/private/chrislin/Pretrain_Model/pretrain_75.pth"
+# pretrain_model: ""
+
+
+# Dataset Cfg
+dataset: "openauo" #'imagenet100', 'cifar100'
+DA_type: "msrcp" # "NONE" / "msrcp" 
+data_folder: "/hcds_vol/private/chrislin/AUO_Data_811_DA/"
+train_csv: "train_Open_DA" 
+thres_csv: "val_Open_ordered"
+test_csv: "val_Open_ordered"
+# data_folder: "/hcds_vol/private/chrislin/20230830_C101/"
+# train_csv: "train_0830_200_DA" 
+# thres_csv: "test_0830_200"
+# test_csv: "test_0830_200"
+trial: 22
+increment: 3
+batch_size: 64
+workers: 24
+validation: 0 # Validation split (0. <= x <= 1.)
+random_classes: False #Randomize classes order of increment
+start_class: 16 # number of tasks for the first step, start from 0. 要改?????
+start_task: 0
+end_task: 5
+max_task:  # Cap the number of task
+openset: True
+DA: True
+ordered: True
+oscil: True
+
+#Memory
+coreset_strategy: "iCaRL"  # iCaRL, random
+mem_size_mode: "uniform_fixed_total_mem" #uniform_fixed_per_cls, uniform_fixed_total_mem
+memory_size: 540 # Max number of storable examplars
+fixed_memory_per_cls: 20 # the fixed number of exemplars per cls
+
+# Misc
+device: 0 #GPU index to use, for cpu use -1
+seed: 1993
+
+load_old_model: False
