@@ -1,4 +1,4 @@
-:pencil2:# DER
+# DER
 
 I scratch features of reference data and test data in below folders:  
 :file_folder:DER/code/ref_pickle  
