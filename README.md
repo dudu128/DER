@@ -1,6 +1,6 @@
 # DER
-Run up the environment
-conda env create -f AUO.yml
+Run up the environment  
+conda env create -f AUO.yml  
 
 Features of reference data and test data are in below folders:  
 :file_folder:DER/code/ref_pickle  
